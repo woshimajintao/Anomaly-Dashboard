@@ -8,7 +8,14 @@ st.set_page_config(page_title='Interactive Dashboard with Anomaly Highlighting',
 
 # 侧边栏选项
 st.sidebar.header('User Control Panel')
-file_path = st.sidebar.text_input('Data Source', value=r"C:\Users\Jintao1999\Desktop\ULB\data mining\project\visualization\final_prediction_original_sample.csv")
+
+# 使用文件上传功能选择数据源文件
+uploaded_file = st.sidebar.file_uploader("Upload Data Source (CSV)", type=["csv"])
+
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file, parse_dates=['minute'])
+else:
+    df = None
 
 # 添加"detection method"下拉框
 detection_method = st.sidebar.selectbox('Detection Method', ['isolation_forest_anamoly', 'lof_anamoly', 'svm_anamoly', 'knn_anamoly','final_anomaly_flag'])
@@ -16,10 +23,8 @@ detection_method = st.sidebar.selectbox('Detection Method', ['isolation_forest_a
 # 主页面
 st.title('Interactive Dashboard with Anomaly Highlighting')
 
-# 读取 CSV 文件并解析 'minute' 列为 datetime 类型
-if file_path:
-    df = pd.read_csv(file_path, parse_dates=['minute'])
-
+# 确保数据已加载
+if df is not None:
     # 更新选择车辆 ID 的选项
     selected_id = st.sidebar.selectbox('Vehicle ID', df['mapped_veh_id'].unique())
 
