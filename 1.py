@@ -31,7 +31,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 #st.set_page_config(page_title='Anomaly Dashboard', layout='wide')
 # First Lottie Animation
-lottie_filepath = "Animation.json"  # Replace with your file path for the first animation
+lottie_filepath = "animation.json"  # Replace with your file path for the first animation
 lottie_animation = load_lottiefile(lottie_filepath)
 
 # Second Lottie Animation
@@ -43,6 +43,7 @@ row2_space1, row2_space2 = st.columns([.2, .8])  # 新增的列
 
 
 # Displaying First Animation
+
 with row1_1:
     #st.title('Welcome to Anomaly Dashboard!')
     st.write("<span style='font-size: 32px;'><strong>Welcome to Anomaly Dashboard!</span>", unsafe_allow_html=True)
@@ -63,12 +64,9 @@ with row1_1:
    
 
     #st.write("This is the additional line of text.", key="additional_text", font_size=6)
-    st.markdown("<hr/>", unsafe_allow_html=True)  # Add an underline
-    # 在下划线下方添加视频控件
-    st.markdown("<div style='font-size: 24px;'><strong>Tutorial Video:</strong></div>", 
-             unsafe_allow_html=True)
-    st.video("https://youtu.be/TVA_IU-_WKs")
-
+    #st.markdown("<hr/>", unsafe_allow_html=True)  # Add an underline
+    
+        
 
 with row1_2:
     st_lottie(lottie_animation, height=150, key="animation")
@@ -80,7 +78,7 @@ with row1_2:  # 改变这里的行为
 
     # Place the second animation here
     st_lottie(another_lottie_animation, height=240, key="second_animation")  # Adjust height as needed
-    st.write("")  # Empty space
+    #st.write("")  # Empty space
 # Rest of your Streamlit app code
 
 # [Include the code for sidebar, data uploading, processing, and plotting as per your original app functionality]
@@ -90,6 +88,49 @@ with row1_2:  # 改变这里的行为
 #lottie_filepath = "another_animation.json"  # 替换为您的动画文件路径
 #lottie_animation = load_lottiefile(lottie_filepath)
 
+# 在下划线下方添加视频控件
+with st.expander('Tutorial Video'):
+    st.title('Tutorial Video')
+    st.video("https://youtu.be/TVA_IU-_WKs")
+#st.markdown("<hr/>", unsafe_allow_html=True)  # Add an underline
+
+with st.expander('Data'):
+    st.title('Data')
+    #st.subheader('All data for this project was publicly sourced from:')
+    col1,col2,col3=st.columns(3)
+    col1.subheader('Source')
+    col2.subheader('Description')
+    col3.subheader('Link')
+    with st.container():
+        col1,col2,col3=st.columns(3)
+        #col1.image('census_graphic.png',width=150)
+        col1.write(':white[Mapbox]')
+        col2.write('Open Street Map')
+        #col2.write('American Community Survey, 5-Year Profiles, 2021, datasets DP02 - DP05')
+        col3.write('https://www.mapbox.com/')
+    
+    with st.container():
+        col1,col2,col3=st.columns(3)
+        #col1.image('cdc.png',width=150)
+        col1.write(':white[The National Railway Company of Belgium SNCB]')
+        col2.write('Railway line sections')
+        col3.write('https://infrabel-opendata.goelff.be/line-sections')
+    
+    with st.container():
+        col1,col2,col3=st.columns(3)
+        #col1.image('hud.png',width=150)\
+        col1.write(':white[Github]')
+        col2.write('All stations in Belgium')
+        col3.write('https://github.com/iRail/stations')
+
+    #with st.container():
+     #   col1,col2,col3=st.columns(3)
+        #col1.image('ods.png',width=150)
+      #  col1.write(':white[OpenDataSoft]')
+       # col2.write('Mapping zip to USPS city')
+       # col3.write(':white[https://data.opendatasoft.com/pages/home/')
+
+#st.divider()
 
 
 
@@ -108,15 +149,15 @@ else:
 
 # 创建一个空容器用于后续页面显示
 #page_container = st.empty()
-if st.sidebar.button("Open Map DashBoard"):
+#if st.sidebar.button("Open Map DashBoard"):
     # 在此处设置打开另一个应用的逻辑
     # 可以使用st.experimental_set_query_params()等方法进行页面导航
-    st.markdown(
-                """
-                [Please Open Map](https://map-dashboard-hwraomedhs4qhszvxtcjzt.streamlit.app/)
-
-                """
-                )
+ #   st.markdown(
+  #              """
+   #             [Please Open Map](https://map-dashboard-hwraomedhs4qhszvxtcjzt.streamlit.app/)
+#
+ #               """
+  #              )
 # 添加"detection method"下拉框
 detection_method = st.sidebar.selectbox('Detection Method', ['isolation_forest_anamoly', 'lof_anamoly', 'svm_anamoly', 'knn_anamoly','final_anomaly_flag'])
 # 在左侧控件栏中添加一个按钮
@@ -196,7 +237,7 @@ if df is not None:
     fig.update_layout(
         title=f'{column_name} Variation Curve and Anomalies',
         autosize=False,
-        width=900,
+        width=850,
         height=550,
         xaxis_title='Time',
         yaxis_title=f'{column_name}',
@@ -206,13 +247,33 @@ if df is not None:
         )
     )
 
+    with st.expander('What is this Specific Scenario?'):
+
     
-    st.write("<span style='font-size: 18px;'><strong>Specific Scenario:</span>", unsafe_allow_html=True)
+        
+        st.metric("Detection Method", detection_method)
+        st.metric("Selected Vehicle ID", selected_id)
+        st.metric("Selected Dimension", column_name)
+        #st.metric("Selected Time Range", f"{start_date.strftime('%m/%d/%Y %I:%M %p')} to {end_date.strftime('%m/%d/%Y %I:%M %p')}")
+        #st.metric("Selected Time Range", f"{start_date.strftime('%m/%d/%Y %I:%M').lstrip('0')} to {end_date.strftime('%m/%d/%Y %I:%M').lstrip('0')}")
+        st.metric("Selected Time Range", f"{start_date.strftime('%m/%d/%Y %H:%M')} to {end_date.strftime('%m/%d/%Y %H:%M')}")
+
+    
+
+
+
+
+    #st.write("<span style='font-size: 18px;'><strong>Specific Scenario:</span>", unsafe_allow_html=True)
     #st.markdown(f"<strong>specific scenario ID:</strong> , unsafe_allow_html=True)
-    st.markdown(f"<strong>Selected Vehicle ID:</strong> {selected_id}", unsafe_allow_html=True)
-    st.markdown(f"<strong>Detection Method:</strong> {detection_method}", unsafe_allow_html=True)
-    st.markdown(f"<strong>Selected Dimension:</strong> {column_name}", unsafe_allow_html=True)
-    st.markdown(f"<strong>Selected Time Range:</strong> {start_date.strftime('%m/%d/%Y %I:%M %p')} to {end_date.strftime('%m/%d/%Y %I:%M %p')}", unsafe_allow_html=True)
+    #st.metric("Selected Vehicle ID", selected_id)
+    #st.metric("Detection Method", detection_method)
+    #st.metric("Selected Dimension", column_name)
+    #st.metric("Selected Time Range", f"{start_date.strftime('%m/%d/%Y %I:%M %p')} to {end_date.strftime('%m/%d/%Y %I:%M %p')}")
+
+    #st.markdown(f"<strong>Selected Vehicle ID:</strong> {selected_id}", unsafe_allow_html=True)
+    #st.markdown(f"<strong>Detection Method:</strong> {detection_method}", unsafe_allow_html=True)
+    #st.markdown(f"<strong>Selected Dimension:</strong> {column_name}", unsafe_allow_html=True)
+    #st.markdown(f"<strong>Selected Time Range:</strong> {start_date.strftime('%m/%d/%Y %I:%M %p')} to {end_date.strftime('%m/%d/%Y %I:%M %p')}", unsafe_allow_html=True)
 
 
     # 在 Streamlit 上显示图表
@@ -250,3 +311,24 @@ if df is not None:
             if not anomaly_df.empty:
                 st.write("<span style='font-size: 16px;'><strong>Details of Anomalies:</span>", unsafe_allow_html=True)
                 st.dataframe(anomaly_df[['mapped_veh_id','minute','lat', 'lon','RS_E_InAirTemp_PC1', 'RS_E_InAirTemp_PC2', 'RS_E_OilPress_PC1', 'RS_E_OilPress_PC2', 'RS_E_RPM_PC1', 'RS_E_RPM_PC2', 'RS_E_WatTemp_PC1', 'RS_E_WatTemp_PC2', 'RS_T_OilTemp_PC1', 'RS_T_OilTemp_PC2', 'Temperature', 'RelativeHumidity', 'DewPoint', 'Precipitation', 'Snowfall', 'Rain']])
+            
+        with st.expander('Map Dashboard'):
+                st.markdown(
+                        """
+                        [Please Open Map](https://map-dashboard-hwraomedhs4qhszvxtcjzt.streamlit.app/)
+
+                        """
+                        )
+        with st.expander('Creator'):
+            st.title('Creator')
+            with st.container():
+                col1,col2=st.columns([3,1])
+                col1.write('')
+                col1.write('')
+                col1.write('')
+                col1.write('**Name:**    Jintao Ma')
+                col1.write('**Education:**    Erasmus Mundus  Master Programme in Big Data Management and Analytics (BDMA)')
+                col1.write('**Experience:**    1 YOE in Data Science across Insurance')
+                col1.write('**Contact:**    mars19990123@gmail.com or [linkedin](https://www.linkedin.com/in/jintao-m-758b26158)')
+                col1.write('**Thanks for stopping by!**')
+                col2.image('jintao.jpg',width=130)
