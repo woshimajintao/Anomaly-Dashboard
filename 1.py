@@ -87,8 +87,8 @@ with row1_2:  # 改变这里的行为
 
 
 # 加载动画文件
-lottie_filepath = "another_animation.json"  # 替换为您的动画文件路径
-lottie_animation = load_lottiefile(lottie_filepath)
+#lottie_filepath = "another_animation.json"  # 替换为您的动画文件路径
+#lottie_animation = load_lottiefile(lottie_filepath)
 
 
 
