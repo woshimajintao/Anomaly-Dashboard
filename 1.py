@@ -295,10 +295,12 @@ if df is not None:
         total_normals = len(normal_df)
         total_records = len(filtered_df)
 
-        st.write("<span style='font-size: 18px;'><strong>In this scenario:</span>", unsafe_allow_html=True)
-        st.write(f"Number of anomalies: {total_anomalies}")
-        st.write(f"Number of normals: {total_normals}")
-        st.write(f"Proportion of anomalies: {total_anomalies / total_records:.2%}")
+        #st.write("<span style='font-size: 18px;'><strong>In this scenario:</span>", unsafe_allow_html=True)
+        with st.expander('Result in Specific Scenario'):
+            st.title('Result in Specific Scenario:')
+            st.write(f"Number of anomalies: {total_anomalies}")
+            st.write(f"Number of normals: {total_normals}")
+            st.write(f"Proportion of anomalies: {total_anomalies / total_records:.2%}")
 
 
         # 在主页面中显示异常值详细信息表格
@@ -309,9 +311,10 @@ if df is not None:
                 anomaly_df = filtered_df[filtered_df[detection_method] == -1]
 
             if not anomaly_df.empty:
-                st.write("<span style='font-size: 16px;'><strong>Details of Anomalies:</span>", unsafe_allow_html=True)
-                st.dataframe(anomaly_df[['mapped_veh_id','minute','lat', 'lon','RS_E_InAirTemp_PC1', 'RS_E_InAirTemp_PC2', 'RS_E_OilPress_PC1', 'RS_E_OilPress_PC2', 'RS_E_RPM_PC1', 'RS_E_RPM_PC2', 'RS_E_WatTemp_PC1', 'RS_E_WatTemp_PC2', 'RS_T_OilTemp_PC1', 'RS_T_OilTemp_PC2', 'Temperature', 'RelativeHumidity', 'DewPoint', 'Precipitation', 'Snowfall', 'Rain']])
-            
+                with st.expander('Details of Anomalies'):
+                    st.title('Details of Anomalies:')
+                    st.dataframe(anomaly_df[['mapped_veh_id','minute','lat', 'lon','RS_E_InAirTemp_PC1', 'RS_E_InAirTemp_PC2', 'RS_E_OilPress_PC1', 'RS_E_OilPress_PC2', 'RS_E_RPM_PC1', 'RS_E_RPM_PC2', 'RS_E_WatTemp_PC1', 'RS_E_WatTemp_PC2', 'RS_T_OilTemp_PC1', 'RS_T_OilTemp_PC2', 'Temperature', 'RelativeHumidity', 'DewPoint', 'Precipitation', 'Snowfall', 'Rain']])
+                
         with st.expander('Map Dashboard'):
                 st.markdown(
                         """
