@@ -91,7 +91,7 @@ with row1_2:  # 改变这里的行为
 # 在下划线下方添加视频控件
 with st.expander('Tutorial Video'):
     st.title('Tutorial Video')
-    st.video("https://youtu.be/TVA_IU-_WKs")
+    st.video("https://youtu.be/JcR9DMg59yc")
 #st.markdown("<hr/>", unsafe_allow_html=True)  # Add an underline
 
 with st.expander('Data'):
