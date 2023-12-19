@@ -31,7 +31,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 #st.set_page_config(page_title='Anomaly Dashboard', layout='wide')
 # First Lottie Animation
-lottie_filepath = "animation.json"  # Replace with your file path for the first animation
+lottie_filepath = "Animation.json"  # Replace with your file path for the first animation
 lottie_animation = load_lottiefile(lottie_filepath)
 
 # Second Lottie Animation
