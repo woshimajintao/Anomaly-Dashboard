@@ -131,7 +131,19 @@ with st.expander('Data'):
        # col3.write(':white[https://data.opendatasoft.com/pages/home/')
 
 #st.divider()
-
+with st.expander('Creator'):
+            st.title('Creator')
+            with st.container():
+                col1,col2=st.columns([3,1])
+                col1.write('')
+                col1.write('')
+                col1.write('')
+                col1.write('**Name:**    Jintao Ma')
+                col1.write('**Education:**    Erasmus Mundus  Master Programme in Big Data Management and Analytics (BDMA)')
+                col1.write('**Experience:**    1 YOE in Data Science across Insurance')
+                col1.write('**Contact:**    mars19990123@gmail.com or [linkedin](https://www.linkedin.com/in/jintao-m-758b26158)')
+                col1.write('**Thanks for stopping by!**')
+                col2.image('jintao.jpg',width=130)
 
 
 
